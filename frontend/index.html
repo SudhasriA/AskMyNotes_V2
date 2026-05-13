@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AskMyNotes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+
+    <!-- ══════════════════════════════════════
+         HEADER
+    ══════════════════════════════════════ -->
+    <header>
+      <h1>AskMyNotes</h1>
+      <p>Upload a PDF. Ask a question. Get a grounded answer.</p>
+    </header>
+
+    <!-- ══════════════════════════════════════
+         MAIN
+    ══════════════════════════════════════ -->
+    <main>
+
+      <!-- ── SECTION 1 : Upload ── -->
+      <section id="section-upload">
+
+        <div id="section-upload-label">
+          <span id="step-badge-1">01</span>
+          <label for="pdf-input">Upload your notes (PDF)</label>
+        </div>
+
+        <!-- Poda animated wrapper -->
+        <div id="poda">
+          <div class="darkBorderBg"></div>
+          <div class="glow"></div>
+          <div class="white"></div>
+          <div class="border"></div>
+          <div id="main">
+            <div id="input-mask"></div>
+            <div id="pink-mask"></div>
+            <span id="search-icon">📄</span>
+            <input
+              type="file"
+              id="pdf-input"
+              accept="application/pdf"
+            />
+            <div id="filter-icon">⚙</div>
+            <div class="filterBorder"></div>
+          </div>
+        </div>
+
+        <p id="upload-status"></p>
+
+      </section>
+
+      <!-- ── SECTION 2 : Question ── -->
+      <section id="section-question">
+
+        <div id="section-question-label">
+          <span id="step-badge-2">02</span>
+          <label for="question">Your question</label>
+        </div>
+
+        <textarea
+          id="question"
+          rows="4"
+          placeholder="Type your question here..."
+        ></textarea>
+
+        <!-- Uiverse Submit Button — Spacious74 -->
+        <button id="ask-btn" type="button">
+          <div class="blob1"></div>
+          <div class="inner">
+            <span>Ask Question</span>
+            <span id="btn-arrow">→</span>
+          </div>
+        </button>
+
+        <p id="status"></p>
+
+      </section>
+
+      <!-- ── SECTION 3 : Answer Box ── -->
+      <section id="section-answer">
+
+        <div id="answer-box-header">
+          <span id="step-badge-3">03</span>
+          <h2 id="answer-heading">Answer</h2>
+        </div>
+
+        <!-- Empty state shown before answer arrives -->
+        <div id="answer-empty">
+          <span id="empty-sparkle">✦</span>
+          <p id="empty-text">Your answer will appear here</p>
+          <p id="empty-sub">Upload a PDF and ask a question to get started</p>
+        </div>
+
+        <!-- Answer content — hidden until JS populates it -->
+        <div id="answer" hidden>
+
+          <!-- Meta pills -->
+          <div id="meta-row">
+            <p id="qtype-pill" hidden></p>
+            <p id="tool-pill"  hidden></p>
+          </div>
+
+          <!-- Answer text -->
+          <div id="answer-body">
+            <p id="answer-text"></p>
+          </div>
+
+          <!-- Copy button -->
+          <div id="answer-actions">
+            <button type="button" id="copy-btn">⎘ Copy Answer</button>
+            <div id="feedback-row">
+              <button type="button" id="thumb-up"   aria-label="Helpful">👍</button>
+              <button type="button" id="thumb-down" aria-label="Not helpful">👎</button>
+            </div>
+          </div>
+
+          <!-- Sources -->
+          <details id="sources" hidden>
+            <summary>📚 Sources</summary>
+            <ul id="sources-list"></ul>
+          </details>
+
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- ══════════════════════════════════════
+         FOOTER
+    ══════════════════════════════════════ -->
+    <footer>
+      <p>Built in the AI Engineering Bootcamp.</p>
+    </footer>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>
