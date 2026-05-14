@@ -1,0 +1,57 @@
+<html>
+<head></head>
+
+<body>
+    <h1 id="demo">This is some text.</h1>
+    <button onclick="changeText()">
+      Change Text
+      </button>
+<input type="button" onclick="sayHello()" value="Say Hello" id="button">
+<input type="text" onkeydown="customizeInput()">
+    <script>
+        function changeText() {
+            let element = document.getElementById("demo");
+            element.textContent = "Text changed by JavaScript!";
+        }
+        function changeText() {
+            let element = document.getElementById("demo");
+            element.textContent = "Text changed by JavaScript by 2nd Time!";
+        }
+        
+        const button = document.querySelector('#button');
+         button.addEventListener("click", function(event) {
+
+            // Get mouse coordinates
+            const x = event.clientX;
+            const y = event.clientY;
+
+            // Show alert box
+            alert(`Button clicked at X: ${x}, Y: ${y}`);
+
+        });
+
+
+        function customizeInput() {
+         var ele = document.getElementsByTagName("INPUT")[0];
+         ele.style.backgroundColor = "GREEN";
+         ele.style.color = "BLACK";
+      }
+      
+    </script>
+
+    <button id="btn">Click Me</button>
+
+    <script>
+    const btn = document.getElementById("btn");
+
+    btn.addEventListener("click", function () {
+        console.log("First");
+    });
+
+    btn.addEventListener("click", function () {
+        console.log("Second");
+    });
+    </script>
+
+</body>
+</html>
