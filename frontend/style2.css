@@ -1,0 +1,671 @@
+/* ============================================
+   AskMyNotes - Soft Rose Pastel Theme
+   60-30-10 Rule:
+   60% → Soft Ivory / Blush White (backgrounds)
+   30% → Rose Milk / Soft Rose Gray (cards/borders)
+   10% → Dusty Rose / Pastel Pink (accents)
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800&family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+/* ---------- CSS Variables ---------- */
+:root {
+  /* 60% — Backgrounds */
+  --bg-main: #FFF9F9;
+  --bg-secondary: #FFF1F2;
+  --bg-card: #FFE4E6;
+
+  /* 30% — Supporting */
+  --border: #E9D5D8;
+  --text-secondary: #7C6A75;
+
+  /* 10% — Accents */
+  --pink-primary: #F472B6;
+  --pink-secondary: #FDA4AF;
+  --accent-glow: #FBCFE8;
+
+  /* Text */
+  --text-primary: #3F2D3D;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(244, 114, 182, 0.08);
+  --shadow-md: 0 8px 24px rgba(244, 114, 182, 0.12);
+  --shadow-lg: 0 16px 48px rgba(244, 114, 182, 0.18);
+  --shadow-glow: 0 0 30px rgba(251, 207, 232, 0.5);
+
+  /* Easing */
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ---------- Reset ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ---------- Animated Background ---------- */
+body {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  color: var(--text-primary);
+  min-height: 100vh;
+  line-height: 1.6;
+  overflow-x: hidden;
+  position: relative;
+  background: var(--bg-main);
+}
+
+/* Smooth blended animated background */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(circle at 20% 20%, #FBCFE8 0%, transparent 45%),
+    radial-gradient(circle at 80% 10%, #FDA4AF 0%, transparent 50%),
+    radial-gradient(circle at 70% 80%, #F472B6 0%, transparent 40%),
+    radial-gradient(circle at 10% 90%, #FFE4E6 0%, transparent 50%),
+    linear-gradient(135deg, #FFF9F9 0%, #FFF1F2 50%, #FFE4E6 100%);
+  background-size: 200% 200%;
+  animation: gradientFlow 18s ease-in-out infinite;
+  opacity: 0.85;
+}
+
+/* Soft subtle grid overlay */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(to right, rgba(233, 213, 216, 0.25) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(233, 213, 216, 0.25) 1px, transparent 1px);
+  background-size: 2rem 2rem;
+  filter: blur(0.5px);
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+@keyframes gradientFlow {
+  0%, 100% {
+    background-position: 0% 50%, 100% 0%, 50% 100%, 0% 100%, 0% 0%;
+  }
+  25% {
+    background-position: 100% 0%, 50% 50%, 100% 50%, 50% 50%, 50% 50%;
+  }
+  50% {
+    background-position: 100% 100%, 0% 100%, 0% 0%, 100% 0%, 100% 100%;
+  }
+  75% {
+    background-position: 50% 50%, 100% 100%, 50% 0%, 100% 50%, 50% 100%;
+  }
+}
+
+/* Floating blobs */
+body > * {
+  position: relative;
+}
+
+/* ---------- Typography ---------- */
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+p, label, textarea, input, button {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* ---------- Header ---------- */
+header {
+  text-align: center;
+  padding: 4rem 1.5rem 2.5rem;
+  animation: fadeSlideDown 1s var(--ease-smooth) both;
+}
+
+header h1 {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  background: linear-gradient(135deg, #3F2D3D 0%, #F472B6 50%, #FDA4AF 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.03em;
+  position: relative;
+  display: inline-block;
+}
+
+header h1::after {
+  content: "";
+  display: block;
+  width: 60%;
+  height: 3px;
+  margin: 0.6rem auto 0;
+  background: linear-gradient(90deg, transparent, var(--pink-primary), transparent);
+  border-radius: 999px;
+  animation: shimmerLine 3s ease-in-out infinite;
+}
+
+header p {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+  max-width: 540px;
+  margin: 0 auto;
+  letter-spacing: 0.01em;
+}
+
+@keyframes shimmerLine {
+  0%, 100% { transform: scaleX(0.6); opacity: 0.6; }
+  50%      { transform: scaleX(1);   opacity: 1; }
+}
+
+@keyframes fadeSlideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Main Layout ---------- */
+main {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+/* ---------- Section Cards (with animated glow border) ---------- */
+main section {
+  position: relative;
+  background: rgba(255, 244, 246, 0.7);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 1.75rem 1.75rem;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  transition: transform 0.5s var(--ease-smooth),
+              box-shadow 0.5s var(--ease-smooth),
+              border-color 0.5s var(--ease-smooth);
+  animation: fadeSlideUp 0.9s var(--ease-smooth) both;
+}
+
+main section:nth-of-type(1) { animation-delay: 0.15s; }
+main section:nth-of-type(2) { animation-delay: 0.30s; }
+main section:nth-of-type(3) { animation-delay: 0.45s; }
+
+main section:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg), var(--shadow-glow);
+  border-color: var(--pink-secondary);
+}
+
+/* Rotating conic-gradient glow behind cards */
+main section::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    var(--accent-glow) 10%,
+    transparent 25%,
+    transparent 50%,
+    var(--pink-secondary) 60%,
+    transparent 75%,
+    transparent 100%
+  );
+  transform: translate(-50%, -50%) rotate(0deg);
+  z-index: -1;
+  opacity: 0;
+  filter: blur(40px);
+  transition: opacity 0.8s var(--ease-smooth);
+  animation: rotateGlow 12s linear infinite;
+}
+
+main section:hover::before {
+  opacity: 0.45;
+}
+
+@keyframes rotateGlow {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Labels ---------- */
+label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
+
+label::before {
+  content: "✦ ";
+  color: var(--pink-primary);
+}
+
+/* ---------- File Input ---------- */
+input[type="file"] {
+  width: 100%;
+  padding: 1.25rem;
+  border: 2px dashed var(--border);
+  border-radius: 14px;
+  background: rgba(255, 249, 249, 0.7);
+  color: var(--text-secondary);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.4s var(--ease-smooth);
+}
+
+input[type="file"]:hover {
+  border-color: var(--pink-primary);
+  background: rgba(255, 228, 230, 0.6);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+input[type="file"]::file-selector-button {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 0.6rem 1.2rem;
+  margin-right: 1rem;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--pink-primary), var(--pink-secondary));
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s var(--ease-smooth);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background: linear-gradient(135deg, var(--pink-secondary), var(--pink-primary));
+  transform: scale(1.05);
+  box-shadow: 0 4px 14px rgba(244, 114, 182, 0.4);
+}
+
+/* ---------- Textarea (with adapted animated glow border) ---------- */
+textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 1rem 1.2rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: rgba(255, 249, 249, 0.85);
+  color: var(--text-primary);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  resize: vertical;
+  outline: none;
+  transition: all 0.4s var(--ease-smooth);
+  position: relative;
+  z-index: 1;
+}
+
+textarea::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.75;
+  font-style: italic;
+}
+
+textarea:hover {
+  border-color: var(--pink-secondary);
+  background: rgba(255, 241, 242, 0.9);
+}
+
+textarea:focus {
+  border-color: var(--pink-primary);
+  background: #ffffff;
+  box-shadow:
+    0 0 0 4px rgba(244, 114, 182, 0.15),
+    0 8px 24px rgba(244, 114, 182, 0.1);
+  transform: translateY(-2px);
+}
+
+/* ---------- Submit Button (adapted Uiverse Spacious74 style) ---------- */
+#ask-btn {
+  cursor: pointer;
+  font-size: 1.05rem;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 16px;
+  border: none;
+  padding: 2px;
+  background: radial-gradient(circle 80px at 80% -10%, #ffffff, #FDA4AF);
+  position: relative;
+  color: #fff;
+  margin-top: 1.25rem;
+  overflow: hidden;
+  transition: transform 0.35s var(--ease-bounce),
+              box-shadow 0.4s var(--ease-smooth);
+  isolation: isolate;
+}
+
+#ask-btn::after {
+  content: "";
+  position: absolute;
+  width: 65%;
+  height: 60%;
+  border-radius: 120px;
+  top: 0;
+  right: 0;
+  box-shadow: 0 0 20px rgba(251, 207, 232, 0.6);
+  z-index: -1;
+}
+
+#ask-btn::before {
+  content: "";
+  position: absolute;
+  width: 70px;
+  height: 100%;
+  border-radius: 16px;
+  bottom: 0;
+  left: 0;
+  background: radial-gradient(
+    circle 60px at 0% 100%,
+    var(--accent-glow),
+    rgba(244, 114, 182, 0.5),
+    transparent
+  );
+  box-shadow: -10px 10px 30px rgba(244, 114, 182, 0.25);
+  z-index: 0;
+  transition: transform 0.6s var(--ease-smooth);
+}
+
+#ask-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 32px rgba(244, 114, 182, 0.35);
+}
+
+#ask-btn:hover::before {
+  transform: translateX(80%);
+}
+
+#ask-btn:active {
+  transform: translateY(-1px) scale(0.99);
+}
+
+/* Inner pill — the visible button surface */
+#ask-btn {
+  display: inline-block;
+}
+
+#ask-btn span,
+#ask-btn {
+  /* fallback inner styling because we don't have a span wrapper */
+}
+
+/* Since the HTML uses bare <button>Submit</button>, we style the button as the inner pill directly */
+#ask-btn {
+  padding: 14px 32px;
+  background:
+    radial-gradient(circle 80px at 80% -50%, #FFF1F2, #F472B6),
+    radial-gradient(circle 80px at 80% -10%, #ffffff, #FDA4AF);
+  background-blend-mode: overlay;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(63, 45, 61, 0.25);
+  border-radius: 16px;
+}
+
+#ask-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none;
+}
+
+/* ---------- Status / Pills ---------- */
+#upload-status,
+#status {
+  margin-top: 0.85rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  min-height: 1.2em;
+  transition: color 0.3s var(--ease-smooth);
+}
+
+#upload-status:not(:empty),
+#status:not(:empty) {
+  padding: 0.6rem 0.9rem;
+  background: rgba(255, 228, 230, 0.6);
+  border-left: 3px solid var(--pink-primary);
+  border-radius: 8px;
+  animation: fadeIn 0.4s var(--ease-smooth);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Answer Panel ---------- */
+#answer {
+  animation: fadeSlideUp 0.6s var(--ease-smooth);
+}
+
+#answer h2 {
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+#answer h2::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 28px;
+  background: linear-gradient(180deg, var(--pink-primary), var(--pink-secondary));
+  border-radius: 4px;
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+
+#qtype-pill,
+#tool-pill {
+  display: inline-block;
+  padding: 0.3rem 0.85rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-radius: 999px;
+  margin: 0 0.4rem 0.85rem 0;
+  background: linear-gradient(135deg, var(--bg-card), var(--accent-glow));
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  transition: transform 0.3s var(--ease-bounce);
+}
+
+#qtype-pill:hover,
+#tool-pill:hover {
+  transform: translateY(-2px) scale(1.05);
+}
+
+#answer-text {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--text-primary);
+  padding: 1rem 1.2rem;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
+  border-left: 3px solid var(--pink-primary);
+  margin-bottom: 1rem;
+}
+
+/* ---------- Sources Details ---------- */
+#sources {
+  margin-top: 1rem;
+  border-radius: 12px;
+  background: rgba(255, 241, 242, 0.6);
+  border: 1px solid var(--border);
+  padding: 0.85rem 1rem;
+  transition: all 0.4s var(--ease-smooth);
+}
+
+#sources:hover {
+  border-color: var(--pink-secondary);
+  background: rgba(255, 228, 230, 0.6);
+}
+
+#sources summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  user-select: none;
+}
+
+#sources summary::-webkit-details-marker {
+  display: none;
+}
+
+#sources summary::before {
+  content: "▸";
+  color: var(--pink-primary);
+  transition: transform 0.3s var(--ease-bounce);
+  display: inline-block;
+}
+
+#sources[open] summary::before {
+  transform: rotate(90deg);
+}
+
+#sources-list {
+  list-style: none;
+  padding: 0.85rem 0 0;
+  margin: 0;
+}
+
+#sources-list li {
+  padding: 0.6rem 0.85rem;
+  margin-bottom: 0.4rem;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+  border-left: 2px solid var(--pink-secondary);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  transition: all 0.3s var(--ease-smooth);
+}
+
+#sources-list li:hover {
+  transform: translateX(4px);
+  background: #ffffff;
+  color: var(--text-primary);
+  border-left-color: var(--pink-primary);
+}
+
+/* ---------- Footer ---------- */
+footer {
+  text-align: center;
+  padding: 2.5rem 1.5rem 3rem;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  position: relative;
+}
+
+footer::before {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 1px;
+  margin: 0 auto 1.5rem;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+}
+
+footer p {
+  opacity: 0.85;
+  transition: opacity 0.3s var(--ease-smooth);
+}
+
+footer p:hover {
+  opacity: 1;
+  color: var(--pink-primary);
+}
+
+/* ---------- Hidden attribute (ensure no empty box flashes) ---------- */
+[hidden] {
+  display: none !important;
+}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--pink-secondary), var(--pink-primary));
+  border-radius: 999px;
+  border: 2px solid var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--pink-primary);
+}
+
+/* ---------- Text Selection ---------- */
+::selection {
+  background: var(--pink-secondary);
+  color: #fff;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 640px) {
+  header { padding: 2.5rem 1rem 1.5rem; }
+  main { padding: 0.5rem 1rem 2rem; gap: 1.25rem; }
+  main section { padding: 1.25rem; border-radius: 14px; }
+  #ask-btn { width: 100%; padding: 14px 20px; font-size: 1rem; }
+  header h1 { font-size: 2.25rem; }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

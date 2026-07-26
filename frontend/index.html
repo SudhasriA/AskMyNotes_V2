@@ -14,6 +14,15 @@
   </head>
   <body>
 
+   <!-- paste this as FIRST child inside <body> -->
+<div id="bg-wrap" aria-hidden="true">
+  <div id="bg-gradient"></div>
+  <div id="bg-orb-1"></div>
+  <div id="bg-orb-2"></div>
+  <div id="bg-orb-3"></div>
+  <div id="bg-orb-4"></div>
+  <div id="bg-grid"></div>
+</div>
     <!-- ══════════════════════════════════════
          HEADER
     ══════════════════════════════════════ -->
@@ -94,28 +103,25 @@
           <h2 id="answer-heading">Answer</h2>
         </div>
 
-        <!-- Empty state shown before answer arrives -->
+        <!-- Empty state -->
         <div id="answer-empty">
           <span id="empty-sparkle">✦</span>
           <p id="empty-text">Your answer will appear here</p>
           <p id="empty-sub">Upload a PDF and ask a question to get started</p>
         </div>
 
-        <!-- Answer content — hidden until JS populates it -->
+        <!-- Answer content -->
         <div id="answer" hidden>
 
-          <!-- Meta pills -->
           <div id="meta-row">
             <p id="qtype-pill" hidden></p>
             <p id="tool-pill"  hidden></p>
           </div>
 
-          <!-- Answer text -->
           <div id="answer-body">
             <p id="answer-text"></p>
           </div>
 
-          <!-- Copy button -->
           <div id="answer-actions">
             <button type="button" id="copy-btn">⎘ Copy Answer</button>
             <div id="feedback-row">
@@ -124,7 +130,6 @@
             </div>
           </div>
 
-          <!-- Sources -->
           <details id="sources" hidden>
             <summary>📚 Sources</summary>
             <ul id="sources-list"></ul>
