@@ -10,9 +10,22 @@
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style4.css" />
   </head>
   <body>
+
+    <!-- ══════════════════════════════════════
+         NAVBAR
+    ══════════════════════════════════════ -->
+    <nav id="navbar">
+      <span id="nav-brand">AskMyNotes</span>
+      <ul id="nav-links">
+        <li><a href="#">Home</a></li>
+        <li><a href="#section-upload">Features</a></li>
+        <li><a href="#history">History</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+    </nav>
 
    <!-- paste this as FIRST child inside <body> -->
 <div id="bg-wrap" aria-hidden="true">
@@ -140,6 +153,44 @@
       </section>
 
     </main>
+
+    <!-- ══════════════════════════════════════
+         HISTORY
+    ══════════════════════════════════════ -->
+    <section id="history" class="landing-section">
+      <h2>History</h2>
+      <p>Every question you’ve asked, every insight you’ve uncovered — all in one place.</p>
+      <div class="history-grid">
+        <div class="history-card">
+          <span class="history-date">June 12, 2025</span>
+          <p class="history-q">“What are the key principles of machine learning?”</p>
+          <span class="history-tag">ML Notes.pdf</span>
+        </div>
+        <div class="history-card">
+          <span class="history-date">June 10, 2025</span>
+          <p class="history-q">“Summarise Chapter 3 on neural networks.”</p>
+          <span class="history-tag">Deep Learning.pdf</span>
+        </div>
+        <div class="history-card">
+          <span class="history-date">June 8, 2025</span>
+          <p class="history-q">“What is the difference between supervised and unsupervised learning?”</p>
+          <span class="history-tag">AI Fundamentals.pdf</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         ABOUT
+    ══════════════════════════════════════ -->
+    <section id="about" class="landing-section">
+      <h2>About</h2>
+      <p>AskMyNotes is a RAG-powered study companion built during the AI Engineering Bootcamp. Upload any PDF — lecture slides, textbooks, research papers — and ask questions in plain English.</p>
+      <div class="about-stats">
+        <div class="stat-card"><span class="stat-num">500+</span><span class="stat-label">PDFs Processed</span></div>
+        <div class="stat-card"><span class="stat-num">12k+</span><span class="stat-label">Questions Answered</span></div>
+        <div class="stat-card"><span class="stat-num">98%</span><span class="stat-label">Accuracy Rate</span></div>
+      </div>
+    </section>
 
     <!-- ══════════════════════════════════════
          FOOTER

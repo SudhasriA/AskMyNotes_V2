@@ -182,25 +182,3 @@
     border-right-color: var(--border);
   }
 }
-body {
-  font-family: Arial, sans-serif;
-}
-
-.App {
-  text-align: center;
-  padding: 20px;
-}
-
-.card {
-  width: 320px;
-  margin: 20px auto;
-  padding: 15px;
-  border: 1px solid #000;
-  border-radius: 8px;
-  background-color: white;
-  text-align: left;
-}
-
-.card h2 {
-  text-align: center;
-}

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+            width: 100%;
+            max-width: 420px;
+        }
+        h2 { margin-top: 0; color: #333; }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        textarea { height: 90px; resize: vertical; }
+        button {
+            width: 100%;
+            padding: 11px;
+            background: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 6px;
+        }
+        button:hover { background: #357abd; }
+        pre { background: #f4f4f4; padding: 12px; border-radius: 6px; font-size: 13px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+    <h2>FastAPI Feedback Form</h2>
+
+    <input id="studentName" placeholder="Student Name">
+    <input id="topic" placeholder="Topic">
+    <input id="rating" type="number" placeholder="Rating 1 to 5">
+    <textarea id="comment" placeholder="Comment"></textarea>
+
+    <button onclick="submitFeedback()">Submit Feedback</button>
+
+    <h3>Response</h3>
+    <pre id="output"></pre>
+    </div>
+    <script>
+        async function submitFeedback() {
+            const feedbackData={
+                student_name: document.getElementById("studentName").value,
+                topic:document.getElementById("topic").value,
+                rating: Number(document.getElementById("rating").value),
+                comment: document.getElementById("comment").value
+            };
+            try{
+                const response = await fetch("http://127.0.0.1:8000/feedback",{
+                    method: "POST",
+                    headers:{
+                        "Content-Type":"application/json"
+                    },
+                    body:JSON.stringify(feedbackData)
+                });
+                const result = await response.json();
+                document.getElementById("output").textContent=
+                "Status Code: "+response.status+"\n\n"+
+                JSON.stringify(result,null,2);
+            } catch(err) {
+                document.getElementById("output").textContent = "Error: " + err.message;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,9 +1,9 @@
 /* ============================================
-   AskMyNotes - Soft Rose Pastel Theme
+   AskMyNotes - Natural Slate Theme
    60-30-10 Rule:
-   60% → Soft Ivory / Blush White (backgrounds)
-   30% → Rose Milk / Soft Rose Gray (cards/borders)
-   10% → Dusty Rose / Pastel Pink (accents)
+   60% → Slate Mist / Light Gray (backgrounds)
+   30% → Stone Gray / Slate (cards/borders)
+   10% → Deep Slate / Blue-Gray (accents)
    ============================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800&family=Montserrat:wght@300;400;500;600;700&display=swap');
@@ -11,27 +11,27 @@
 /* ---------- CSS Variables ---------- */
 :root {
   /* 60% — Backgrounds */
-  --bg-main: #FFF9F9;
-  --bg-secondary: #FFF1F2;
-  --bg-card: #FFE4E6;
+  --bg-main: #F4F6F8;
+  --bg-secondary: #E9EDF1;
+  --bg-card: #DDE3EA;
 
   /* 30% — Supporting */
-  --border: #E9D5D8;
-  --text-secondary: #7C6A75;
+  --border: #C5D0DB;
+  --text-secondary: #5E6F82;
 
   /* 10% — Accents */
-  --pink-primary: #F472B6;
-  --pink-secondary: #FDA4AF;
-  --accent-glow: #FBCFE8;
+  --pink-primary: #64748B;
+  --pink-secondary: #94A3B8;
+  --accent-glow: #CBD5E1;
 
   /* Text */
-  --text-primary: #3F2D3D;
+  --text-primary: #1F2A38;
 
   /* Shadows */
-  --shadow-sm: 0 2px 8px rgba(244, 114, 182, 0.08);
-  --shadow-md: 0 8px 24px rgba(244, 114, 182, 0.12);
-  --shadow-lg: 0 16px 48px rgba(244, 114, 182, 0.18);
-  --shadow-glow: 0 0 30px rgba(251, 207, 232, 0.5);
+  --shadow-sm: 0 2px 8px rgba(100, 116, 139, 0.08);
+  --shadow-md: 0 8px 24px rgba(100, 116, 139, 0.12);
+  --shadow-lg: 0 16px 48px rgba(100, 116, 139, 0.18);
+  --shadow-glow: 0 0 30px rgba(203, 213, 225, 0.5);
 
   /* Easing */
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
@@ -70,11 +70,11 @@ body::before {
   inset: 0;
   z-index: -2;
   background:
-    radial-gradient(circle at 20% 20%, #FBCFE8 0%, transparent 45%),
-    radial-gradient(circle at 80% 10%, #FDA4AF 0%, transparent 50%),
-    radial-gradient(circle at 70% 80%, #F472B6 0%, transparent 40%),
-    radial-gradient(circle at 10% 90%, #FFE4E6 0%, transparent 50%),
-    linear-gradient(135deg, #FFF9F9 0%, #FFF1F2 50%, #FFE4E6 100%);
+    radial-gradient(circle at 20% 20%, #CBD5E1 0%, transparent 45%),
+    radial-gradient(circle at 80% 10%, #94A3B8 0%, transparent 50%),
+    radial-gradient(circle at 70% 80%, #64748B 0%, transparent 40%),
+    radial-gradient(circle at 10% 90%, #DDE3EA 0%, transparent 50%),
+    linear-gradient(135deg, #F4F6F8 0%, #E9EDF1 50%, #DDE3EA 100%);
   background-size: 200% 200%;
   animation: gradientFlow 18s ease-in-out infinite;
   opacity: 0.85;
@@ -87,8 +87,8 @@ body::after {
   inset: 0;
   z-index: -1;
   background-image:
-    linear-gradient(to right, rgba(233, 213, 216, 0.25) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(233, 213, 216, 0.25) 1px, transparent 1px);
+    linear-gradient(to right, rgba(197, 208, 219, 0.25) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(197, 208, 219, 0.25) 1px, transparent 1px);
   background-size: 2rem 2rem;
   filter: blur(0.5px);
   pointer-events: none;
@@ -136,7 +136,7 @@ header {
 
 header h1 {
   font-size: clamp(2.5rem, 6vw, 4rem);
-  background: linear-gradient(135deg, #3F2D3D 0%, #F472B6 50%, #FDA4AF 100%);
+  background: linear-gradient(135deg, #1F2A38 0%, #64748B 50%, #94A3B8 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -189,7 +189,7 @@ main {
 /* ---------- Section Cards (with animated glow border) ---------- */
 main section {
   position: relative;
-  background: rgba(255, 244, 246, 0.7);
+  background: rgba(241, 245, 249, 0.7);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border: 1px solid var(--border);
@@ -275,7 +275,7 @@ input[type="file"] {
   padding: 1.25rem;
   border: 2px dashed var(--border);
   border-radius: 14px;
-  background: rgba(255, 249, 249, 0.7);
+  background: rgba(244, 246, 248, 0.7);
   color: var(--text-secondary);
   font-family: 'Montserrat', sans-serif;
   font-size: 0.95rem;
@@ -285,7 +285,7 @@ input[type="file"] {
 
 input[type="file"]:hover {
   border-color: var(--pink-primary);
-  background: rgba(255, 228, 230, 0.6);
+  background: rgba(221, 227, 234, 0.6);
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
@@ -309,7 +309,7 @@ input[type="file"]::file-selector-button {
 input[type="file"]::file-selector-button:hover {
   background: linear-gradient(135deg, var(--pink-secondary), var(--pink-primary));
   transform: scale(1.05);
-  box-shadow: 0 4px 14px rgba(244, 114, 182, 0.4);
+  box-shadow: 0 4px 14px rgba(100, 116, 139, 0.4);
 }
 
 /* ---------- Textarea (with adapted animated glow border) ---------- */
@@ -319,7 +319,7 @@ textarea {
   padding: 1rem 1.2rem;
   border: 1px solid var(--border);
   border-radius: 14px;
-  background: rgba(255, 249, 249, 0.85);
+  background: rgba(244, 246, 248, 0.85);
   color: var(--text-primary);
   font-family: 'Montserrat', sans-serif;
   font-size: 1rem;
@@ -339,15 +339,15 @@ textarea::placeholder {
 
 textarea:hover {
   border-color: var(--pink-secondary);
-  background: rgba(255, 241, 242, 0.9);
+  background: rgba(233, 238, 244, 0.9);
 }
 
 textarea:focus {
   border-color: var(--pink-primary);
   background: #ffffff;
   box-shadow:
-    0 0 0 4px rgba(244, 114, 182, 0.15),
-    0 8px 24px rgba(244, 114, 182, 0.1);
+    0 0 0 4px rgba(100, 116, 139, 0.15),
+    0 8px 24px rgba(100, 116, 139, 0.1);
   transform: translateY(-2px);
 }
 
@@ -362,7 +362,7 @@ textarea:focus {
   border-radius: 16px;
   border: none;
   padding: 2px;
-  background: radial-gradient(circle 80px at 80% -10%, #ffffff, #FDA4AF);
+  background: radial-gradient(circle 80px at 80% -10%, #ffffff, #94A3B8);
   position: relative;
   color: #fff;
   margin-top: 1.25rem;
@@ -380,7 +380,7 @@ textarea:focus {
   border-radius: 120px;
   top: 0;
   right: 0;
-  box-shadow: 0 0 20px rgba(251, 207, 232, 0.6);
+  box-shadow: 0 0 20px rgba(203, 213, 225, 0.6);
   z-index: -1;
 }
 
@@ -395,17 +395,17 @@ textarea:focus {
   background: radial-gradient(
     circle 60px at 0% 100%,
     var(--accent-glow),
-    rgba(244, 114, 182, 0.5),
+    rgba(100, 116, 139, 0.5),
     transparent
   );
-  box-shadow: -10px 10px 30px rgba(244, 114, 182, 0.25);
+  box-shadow: -10px 10px 30px rgba(100, 116, 139, 0.25);
   z-index: 0;
   transition: transform 0.6s var(--ease-smooth);
 }
 
 #ask-btn:hover {
   transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 12px 32px rgba(244, 114, 182, 0.35);
+  box-shadow: 0 12px 32px rgba(100, 116, 139, 0.35);
 }
 
 #ask-btn:hover::before {
@@ -430,11 +430,11 @@ textarea:focus {
 #ask-btn {
   padding: 14px 32px;
   background:
-    radial-gradient(circle 80px at 80% -50%, #FFF1F2, #F472B6),
-    radial-gradient(circle 80px at 80% -10%, #ffffff, #FDA4AF);
+    radial-gradient(circle 80px at 80% -50%, #E9EDF1, #64748B),
+    radial-gradient(circle 80px at 80% -10%, #ffffff, #94A3B8);
   background-blend-mode: overlay;
   color: #ffffff;
-  text-shadow: 0 1px 2px rgba(63, 45, 61, 0.25);
+  text-shadow: 0 1px 2px rgba(31, 42, 56, 0.25);
   border-radius: 16px;
 }
 
@@ -458,7 +458,7 @@ textarea:focus {
 #upload-status:not(:empty),
 #status:not(:empty) {
   padding: 0.6rem 0.9rem;
-  background: rgba(255, 228, 230, 0.6);
+  background: rgba(221, 227, 234, 0.6);
   border-left: 3px solid var(--pink-primary);
   border-radius: 8px;
   animation: fadeIn 0.4s var(--ease-smooth);
@@ -529,7 +529,7 @@ textarea:focus {
 #sources {
   margin-top: 1rem;
   border-radius: 12px;
-  background: rgba(255, 241, 242, 0.6);
+  background: rgba(233, 238, 244, 0.6);
   border: 1px solid var(--border);
   padding: 0.85rem 1rem;
   transition: all 0.4s var(--ease-smooth);
@@ -537,7 +537,7 @@ textarea:focus {
 
 #sources:hover {
   border-color: var(--pink-secondary);
-  background: rgba(255, 228, 230, 0.6);
+  background: rgba(221, 227, 234, 0.6);
 }
 
 #sources summary {
@@ -679,18 +679,18 @@ footer p:hover {
   align-items: center;
   justify-content: space-between;
   padding: 0.9rem 2.5rem;
-  background: rgba(255, 241, 242, 0.75);
+  background: rgba(233, 238, 244, 0.75);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
-  box-shadow: 0 2px 16px rgba(244, 114, 182, 0.08);
+  box-shadow: 0 2px 16px rgba(100, 116, 139, 0.08);
 }
 
 #nav-brand {
   font-family: 'Playfair Display', serif;
   font-weight: 700;
   font-size: 1.25rem;
-  background: linear-gradient(135deg, #3F2D3D 0%, #F472B6 60%, #FDA4AF 100%);
+  background: linear-gradient(135deg, #1F2A38 0%, #64748B 60%, #94A3B8 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -748,7 +748,7 @@ footer p:hover {
   max-width: 760px;
   margin: 0 auto 2rem;
   padding: 2rem 1.75rem;
-  background: rgba(255, 244, 246, 0.7);
+  background: rgba(241, 245, 249, 0.7);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border: 1px solid var(--border);
@@ -760,7 +760,7 @@ footer p:hover {
 .landing-section h2 {
   font-size: 1.75rem;
   margin-bottom: 0.6rem;
-  background: linear-gradient(135deg, #3F2D3D 0%, #F472B6 60%, #FDA4AF 100%);
+  background: linear-gradient(135deg, #1F2A38 0%, #64748B 60%, #94A3B8 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -850,7 +850,7 @@ footer p:hover {
   font-family: 'Playfair Display', serif;
   font-size: 2rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #F472B6, #FDA4AF);
+  background: linear-gradient(135deg, #64748B, #94A3B8);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
