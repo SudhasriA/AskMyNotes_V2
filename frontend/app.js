@@ -1,171 +1,402 @@
-/**
- * AskMyNotes — app.js
- * Pure front-end interaction logic. No network calls, no third-party libs.
- */
-
 document.addEventListener("DOMContentLoaded", () => {
 
-  // ─────────────────────────────────────────────
-  // ELEMENT REFERENCES
-  // ─────────────────────────────────────────────
+  // ============================================================
+  // CONFIG
+  // ============================================================
 
-  const fileInput     = document.querySelector("#pdf-input");
-  const uploadStatus  = document.querySelector("#upload-status");
-  const questionEl    = document.querySelector("#question");
-  const askBtn        = document.querySelector("#ask-btn");
-  const statusEl      = document.querySelector("#status");
-  const answerEl      = document.querySelector("#answer");
-  const answerTextEl  = document.querySelector("#answer-text");
-  const qtypePill     = document.querySelector("#qtype-pill");
-  const toolPill      = document.querySelector("#tool-pill");
-  const sourcesEl     = document.querySelector("#sources");
-  const sourcesListEl = document.querySelector("#sources-list");
+  const API_BASE_URL = "http://127.0.0.1:8000";
 
-  // ─────────────────────────────────────────────
-  // CONSTANTS
-  // ─────────────────────────────────────────────
+  // ============================================================
+  // ELEMENTS
+  // ============================================================
 
-  /** Maps question-type keys → Tailwind pill colour classes. */
-  const QTYPE_COLORS = {
-    definition : "pill pill-indigo",
-    example    : "pill pill-purple",
-    comparison : "pill pill-emerald",
-  };
+  const fileInput = document.getElementById("pdf-input");
+  const uploadStatus = document.getElementById("upload-status");
 
-  /**
-   * Three distinct placeholder source excerpts shown for non-calculator questions.
-   * Text is set via textContent — never innerHTML — per spec.
-   */
-  const PLACEHOLDER_SOURCES = [
-    "Sample source chunk 1 — example excerpt from the uploaded notes.",
-    "Sample source chunk 2 — another excerpt.",
-    "Sample source chunk 3 — final excerpt.",
-  ];
+  const questionEl = document.getElementById("question");
+  const askBtn = document.getElementById("ask-btn");
+  const statusEl = document.getElementById("status");
 
-  // ─────────────────────────────────────────────
+  const answerEl = document.getElementById("answer");
+  const answerTextEl = document.getElementById("answer-text");
+
+  const qtypePill = document.getElementById("qtype-pill");
+  const toolPill = document.getElementById("tool-pill");
+
+  const sourcesEl = document.getElementById("sources");
+  const sourcesListEl = document.getElementById("sources-list");
+
+  const copyBtn = document.getElementById("copy-btn");
+
+  const thumbUp = document.getElementById("thumb-up");
+  const thumbDown = document.getElementById("thumb-down");
+
+
+  // ============================================================
+  // STATE
+  // ============================================================
+
+  let currentDocumentId = null;
+
+
+  // ============================================================
   // HELPERS
-  // ─────────────────────────────────────────────
+  // ============================================================
 
-  /**
-   * Resets every piece of answer-related UI back to its hidden/empty state.
-   * Must be called before each new submission attempt.
-   */
-  function resetAnswerUI() {
-    answerEl.hidden        = true;
-    qtypePill.hidden       = true;
-    toolPill.hidden        = true;
-    sourcesEl.hidden       = true;
-    answerTextEl.textContent = "";
-    statusEl.textContent     = "";
-    // Empty the list without innerHTML on the items themselves
-    while (sourcesListEl.firstChild) {
-      sourcesListEl.removeChild(sourcesListEl.firstChild);
+  function setStatus(message, type = "") {
+
+    statusEl.textContent = message;
+
+    statusEl.className = "";
+
+    if (type) {
+      statusEl.classList.add(`status-${type}`);
     }
   }
 
-  /**
-   * Derives the placeholder question-type from the raw question string.
-   * @param {string} q  Trimmed, lower-cased question.
-   * @returns {"definition"|"example"|"comparison"} placeholderType
-   */
-  function inferQuestionType(q) {
-    if (q.startsWith("what is"))                                              return "definition";
-    if (q.startsWith("give") || q.includes("example"))                       return "example";
-    if (q.includes("vs") || q.includes("versus") ||
-        q.includes("compare") || q.includes("difference"))                   return "comparison";
-    return "definition";
+
+  function setUploadStatus(message, type = "") {
+
+    uploadStatus.textContent = message;
+
+    uploadStatus.className = "";
+
+    if (type) {
+      uploadStatus.classList.add(`status-${type}`);
+    }
   }
 
-  /**
-   * Derives the placeholder tool from the raw question string.
-   * Uses "calculator" only when the input is purely arithmetic.
-   * @param {string} q  Original (non-lowercased) trimmed question.
-   * @returns {"calculator"|"search_notes"} placeholderTool
-   */
-  function inferTool(q) {
-    return /^[0-9\s+\-*/().]+$/.test(q) ? "calculator" : "search_notes";
+
+  function resetAnswer() {
+
+    answerEl.hidden = true;
+
+    qtypePill.hidden = true;
+    toolPill.hidden = true;
+
+    sourcesEl.hidden = true;
+
+    answerTextEl.textContent = "";
+
+    sourcesListEl.replaceChildren();
   }
 
-  // ─────────────────────────────────────────────
-  // FILE INPUT — display selected filename
-  // ─────────────────────────────────────────────
 
-  fileInput.addEventListener("change", () => {
+  function inferQuestionType(question) {
+
+    const q = question.toLowerCase();
+
+    if (
+      q.startsWith("what is") ||
+      q.startsWith("define") ||
+      q.includes("meaning of")
+    ) {
+      return "definition";
+    }
+
+    if (
+      q.includes("difference") ||
+      q.includes("compare") ||
+      q.includes("versus") ||
+      q.includes(" vs ")
+    ) {
+      return "comparison";
+    }
+
+    if (
+      q.includes("example") ||
+      q.startsWith("give")
+    ) {
+      return "example";
+    }
+
+    return "question";
+  }
+
+
+  function displaySources(sources) {
+
+    sourcesListEl.replaceChildren();
+
+    if (!sources || sources.length === 0) {
+      sourcesEl.hidden = true;
+      return;
+    }
+
+    sources.forEach((source) => {
+
+      const li = document.createElement("li");
+
+      const documentName =
+        source.document_name || "Uploaded PDF";
+
+      const chunk =
+        source.chunk_index !== undefined
+          ? `Chunk ${source.chunk_index + 1}`
+          : "";
+
+      li.textContent =
+        `${documentName} — ${chunk}\n${source.excerpt || ""}`;
+
+      sourcesListEl.appendChild(li);
+    });
+
+    sourcesEl.hidden = false;
+  }
+
+
+  // ============================================================
+  // PDF UPLOAD
+  // ============================================================
+
+  fileInput.addEventListener("change", async () => {
+
     const file = fileInput.files[0];
 
     if (!file) {
-      uploadStatus.textContent = "";
-      uploadStatus.className   = "";
       return;
     }
 
-    uploadStatus.textContent = `Selected "${file.name}" (ready to upload)`;
-    uploadStatus.className   = "text-sm text-green-600 mt-2 min-h-[1.25rem]";
+    if (file.type !== "application/pdf") {
+
+      setUploadStatus(
+        "Please select a PDF file.",
+        "error"
+      );
+
+      return;
+    }
+
+    setUploadStatus(
+      `Uploading "${file.name}"...`,
+      "loading"
+    );
+
+    const formData = new FormData();
+
+    formData.append("file", file);
+
+    try {
+
+      const response = await fetch(
+        `${API_BASE_URL}/upload`,
+        {
+          method: "POST",
+          body: formData
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.detail || "PDF upload failed."
+        );
+      }
+
+      currentDocumentId = data.document_id;
+
+      setUploadStatus(
+        `✓ ${data.document_name} processed successfully — ${data.pages} pages, ${data.chunks} chunks.`,
+        "success"
+      );
+
+      resetAnswer();
+
+      setStatus("");
+
+    } catch (error) {
+
+      console.error(error);
+
+      currentDocumentId = null;
+
+      setUploadStatus(
+        `Upload failed: ${error.message}`,
+        "error"
+      );
+    }
   });
 
-  // ─────────────────────────────────────────────
-  // SUBMIT FLOW
-  // ─────────────────────────────────────────────
 
-  askBtn.addEventListener("click", () => {
+  // ============================================================
+  // ASK QUESTION
+  // ============================================================
 
-    // ── Step 1 · Validate input ────────────────
+  askBtn.addEventListener("click", async () => {
+
     const question = questionEl.value.trim();
 
     if (!question) {
-      statusEl.textContent = "Please type a question first.";
-      statusEl.className   = "text-sm text-red-500 mt-2 min-h-[1.25rem]";
-      resetAnswerUI();
+
+      setStatus(
+        "Please type a question first.",
+        "error"
+      );
+
       return;
     }
 
-    // ── Step 2 · Show loading state ────────────
-    resetAnswerUI();
-    statusEl.textContent = "Thinking...";
-    statusEl.className   = "text-sm text-gray-500 mt-2 min-h-[1.25rem]";
+    if (!currentDocumentId) {
 
-    // ── Step 3 · Simulate backend delay (exactly one setTimeout) ──
-    setTimeout(() => {
+      setStatus(
+        "Please upload a PDF first.",
+        "warning"
+      );
 
-      // ── Step 4 · Determine question type ────
-      const placeholderType = inferQuestionType(question.toLowerCase());
+      return;
+    }
 
-      // ── Step 5 · Determine tool ─────────────
-      const placeholderTool = inferTool(question);
+    askBtn.disabled = true;
 
-      // ── Step 6 · Build placeholder answer ───
-      const placeholderAnswer =
-        `Placeholder answer for: "${question}". Real answers will appear here once the backend is connected.`;
+    resetAnswer();
 
-      // ── Step 7 · Populate UI ────────────────
+    setStatus(
+      "Searching your notes and generating an answer...",
+      "loading"
+    );
 
-      // Answer text
-      answerTextEl.textContent = placeholderAnswer;
+    try {
 
-      // Question-type pill
-      qtypePill.textContent = `type: ${placeholderType}`;
-      qtypePill.className   = QTYPE_COLORS[placeholderType];
-      qtypePill.hidden      = false;
+      const response = await fetch(
+        `${API_BASE_URL}/ask`,
+        {
+          method: "POST",
 
-      // Tool pill
-      toolPill.textContent = `tool: ${placeholderTool}`;
-      toolPill.hidden      = false;
+          headers: {
+            "Content-Type": "application/json"
+          },
 
-      // Sources — only for non-calculator questions
-      if (placeholderTool !== "calculator") {
-        PLACEHOLDER_SOURCES.forEach((excerpt) => {
-          const li = document.createElement("li");
-          li.textContent = excerpt;          // textContent only — no innerHTML
-          sourcesListEl.appendChild(li);
-        });
-        sourcesEl.hidden = false;
+          body: JSON.stringify({
+            question: question,
+            document_id: currentDocumentId
+          })
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.detail || "Failed to generate answer."
+        );
       }
 
-      // Reveal answer panel and clear the loading message
-      answerEl.hidden      = false;
-      statusEl.textContent = "";
+      // ------------------------------
+      // Answer
+      // ------------------------------
 
-    }, 600); // single 600 ms UX delay
+      answerTextEl.textContent =
+        data.answer || "No answer was generated.";
+
+      // ------------------------------
+      // Question type
+      // ------------------------------
+
+      qtypePill.textContent =
+        `type: ${inferQuestionType(question)}`;
+
+      qtypePill.hidden = false;
+
+      // ------------------------------
+      // Tool
+      // ------------------------------
+
+      toolPill.textContent =
+        `tool: RAG + ${data.model || "Groq"}`;
+
+      toolPill.hidden = false;
+
+      // ------------------------------
+      // Sources
+      // ------------------------------
+
+      displaySources(data.source_chunks);
+
+      // ------------------------------
+      // Reveal answer
+      // ------------------------------
+
+      answerEl.hidden = false;
+
+      setStatus(
+        "Answer generated successfully.",
+        "success"
+      );
+
+    } catch (error) {
+
+      console.error(error);
+
+      setStatus(
+        `Error: ${error.message}`,
+        "error"
+      );
+
+    } finally {
+
+      askBtn.disabled = false;
+    }
+  });
+
+
+  // ============================================================
+  // COPY ANSWER
+  // ============================================================
+
+  copyBtn.addEventListener("click", async () => {
+
+    const answer = answerTextEl.textContent.trim();
+
+    if (!answer) {
+      return;
+    }
+
+    try {
+
+      await navigator.clipboard.writeText(answer);
+
+      const originalText = copyBtn.textContent;
+
+      copyBtn.textContent = "✓ Copied";
+
+      setTimeout(() => {
+        copyBtn.textContent = originalText;
+      }, 1500);
+
+    } catch (error) {
+
+      console.error(error);
+
+      setStatus(
+        "Could not copy the answer.",
+        "error"
+      );
+    }
+  });
+
+
+  // ============================================================
+  // FEEDBACK
+  // ============================================================
+
+  thumbUp.addEventListener("click", () => {
+
+    thumbUp.style.transform = "scale(1.15)";
+
+    setTimeout(() => {
+      thumbUp.style.transform = "";
+    }, 200);
+  });
+
+
+  thumbDown.addEventListener("click", () => {
+
+    thumbDown.style.transform = "scale(1.15)";
+
+    setTimeout(() => {
+      thumbDown.style.transform = "";
+    }, 200);
   });
 
 });

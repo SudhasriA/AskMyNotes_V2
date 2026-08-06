@@ -425,11 +425,10 @@ textarea:focus {
   display: inline-block;
 }
 
-#ask-btn span,
-#ask-btn {
-  /* fallback inner styling because we don't have a span wrapper */
+/* Fallback inner styling because we don't have a span wrapper */
+#ask-btn span {
+  display: inline;
 }
-
 /* Since the HTML uses bare <button>Submit</button>, we style the button as the inner pill directly */
 #ask-btn {
   padding: 14px 32px;
